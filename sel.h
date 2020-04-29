@@ -30,7 +30,7 @@ void createLocalE(Matrix &E,mesh m){
     E.at(1).at(0) += -(3*delta)/2;  E.at(1).at(1) += (3*delta)/2;
 }
 
-void createLocalE(Matrix &F, mesh m){
+void createLocalF(Matrix &F, mesh m){
     float l = m.getParameter(ELEMENT_LENGTH);
     float u = m.getParameter(U_cote);
     F.at(0).at(0) += u/l;      F.at(0).at(1) += -u/l;
@@ -50,8 +50,8 @@ Matrix createLocalK(int element,mesh &m){
     createLocalB(B,m);
     createLocalC(C,m);
     createLocalD(D,m);
-    createLocalC(E,m);
-    createLocalD(F,m);
+    createLocalE(E,m);
+    createLocalF(F,m);
 
     Vector row1, row2, row3, row4;
 
@@ -167,7 +167,7 @@ void applyDirichlet(mesh &m,Matrix &K,Vector &b){
 
 
 void calculate(Matrix &K, Vector &b, Vector &T){
-    cout<<"Hasta aqui llego :v"
+    cout<<"Hasta aqui llego :v";
     //cout << "Iniciando calculo de respuesta...\n";
     //Matrix Kinv;
     //cout << "Calculo de inversa...\n";

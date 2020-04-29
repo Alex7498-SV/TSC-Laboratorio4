@@ -39,9 +39,9 @@ int main()
 
     calculate(K,b,T);
 
-    cout << "La respuesta es: " << endl;
+    //cout << "La respuesta es: " << endl;
     
-    showVector(T);
+    //showVector(T);
 
     return 0;
 }
