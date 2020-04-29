@@ -69,12 +69,12 @@ Matrix createLocalK(int element,mesh &m){
     row3.push_back(D.at(0).at(0)); 
     row3.push_back(D.at(0).at(1));
     row3.push_back(E.at(0).at(0)); 
-    row3.push_back(E.at(0).at(0));
+    row3.push_back(E.at(0).at(1));
 
     row4.push_back(D.at(1).at(0)); 
     row4.push_back(D.at(1).at(1));
-    row4.push_back(0); 
-    row4.push_back(0);
+    row4.push_back(E.at(1).at(0)); 
+    row4.push_back(E.at(1).at(1));
 
     K.push_back(row1); 
     K.push_back(row2); 
@@ -87,12 +87,15 @@ Matrix createLocalK(int element,mesh &m){
 Vector createLocalb(int element,mesh &m){
     Vector b;
 
-    float f = m.getParameter(EXTERNAL_FORCE), l = m.getParameter(ELEMENT_LENGTH);
+    float fi = m.getParameter(F_cote);
+    float l = m.getParameter(ELEMENT_LENGTH);
+    float n = m.getParameter(N);
+
     
-    b.push_back(f*l/2); 
-    b.push_back(f*l/2); 
-    b.push_back(0); 
-    b.push_back(0);
+    b.push_back(fi*l/2); 
+    b.push_back(fi*l/2); 
+    b.push_back(n*l/2); 
+    b.push_back(n*l/2);
 
     return b;
 }
@@ -164,10 +167,11 @@ void applyDirichlet(mesh &m,Matrix &K,Vector &b){
 
 
 void calculate(Matrix &K, Vector &b, Vector &T){
-    cout << "Iniciando calculo de respuesta...\n";
-    Matrix Kinv;
-    cout << "Calculo de inversa...\n";
-    inverseMatrix(K,Kinv);
-    cout << "Calculo de respuesta...\n";
-    productMatrixVector(Kinv,b,T);
+    cout<<"Hasta aqui llego :v"
+    //cout << "Iniciando calculo de respuesta...\n";
+    //Matrix Kinv;
+    //cout << "Calculo de inversa...\n";
+    //inverseMatrix(K,Kinv);
+    //cout << "Calculo de respuesta...\n";
+    //productMatrixVector(Kinv,b,T);
 }
