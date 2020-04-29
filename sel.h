@@ -1,7 +1,7 @@
 void createLocalA(Matrix &A,mesh m){
     float t = m.getParameter(T_cote);
-    A.at(0).at(0) += -t/2;  A.at(0).at(1) += t/2;
-    A.at(1).at(0) += -t/2;  A.at(1).at(1) += t/2;
+    A.at(0).at(0) += -t/8;  A.at(0).at(1) += t/8;
+    A.at(1).at(0) += -t/8;  A.at(1).at(1) += t/8;
 }
 
 void createLocalB(Matrix &B,mesh m){
@@ -13,8 +13,8 @@ void createLocalB(Matrix &B,mesh m){
 
 void createLocalC(Matrix &C,mesh m){
     float lambda = m.getParameter(LAM_cote);
-    C.at(0).at(0) += -1/(2*lambda);    C.at(0).at(1) += 1/(2*lambda);
-    C.at(1).at(0) += -1/(2*lambda);    C.at(1).at(1) += 1/(2*lambda);
+    C.at(0).at(0) += -lambda/3;    C.at(0).at(1) += lambda/3;
+    C.at(1).at(0) += -lambda/3;    C.at(1).at(1) += lambda/3;
 }
 
 void createLocalD(Matrix &D,mesh m){
@@ -26,8 +26,8 @@ void createLocalD(Matrix &D,mesh m){
 
 void createLocalE(Matrix &E,mesh m){
     float delta = m.getParameter(DEL_cote);
-    E.at(0).at(0) += -(3*delta)/2;  E.at(0).at(1) += (3*delta)/2;
-    E.at(1).at(0) += -(3*delta)/2;  E.at(1).at(1) += (3*delta)/2;
+    E.at(0).at(0) += -(delta)/2;  E.at(0).at(1) += (delta)/2;
+    E.at(1).at(0) += -(delta)/2;  E.at(1).at(1) += (delta)/2;
 }
 
 void createLocalF(Matrix &F, mesh m){
