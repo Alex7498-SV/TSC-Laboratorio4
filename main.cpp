@@ -23,7 +23,7 @@ int main()
     mesh m;
     leerMallayCondiciones(m);
 
-    crearSistemasLocales(m,localKs,localbs);
+    crearSistemasLocales(m,localKs,localbs); 
     
     zeroes(K,m.getSize(NODES)*2);
     zeroes(b,m.getSize(NODES)*2);
