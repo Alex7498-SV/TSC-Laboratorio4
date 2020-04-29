@@ -1,56 +1,75 @@
 void createLocalA(Matrix &A,mesh m){
-    float u_bar = m.getParameter(ADJECTIVE_VELOCITY);
-    A.at(0).at(0) += -u_bar/2;  A.at(0).at(1) += u_bar/2;
-    A.at(1).at(0) += -u_bar/2;  A.at(1).at(1) += u_bar/2;
+    float t = m.getParameter(T_cote);
+    A.at(0).at(0) += -t/2;  A.at(0).at(1) += t/2;
+    A.at(1).at(0) += -t/2;  A.at(1).at(1) += t/2;
 }
 
 void createLocalB(Matrix &B,mesh m){
     float l = m.getParameter(ELEMENT_LENGTH);
-    float nu = m.getParameter(DYNAMIC_VISCOSITY);
-    B.at(0).at(0) += nu/l;      B.at(0).at(1) += -nu/l;
-    B.at(1).at(0) += -nu/l;     B.at(1).at(1) += nu/l;
+    float k = m.getParameter(K_cote);
+    B.at(0).at(0) += k/l;      B.at(0).at(1) += -k/l;
+    B.at(1).at(0) += -k/l;     B.at(1).at(1) += k/l;
 }
 
 void createLocalC(Matrix &C,mesh m){
-    float rho = m.getParameter(DENSITY);
-    C.at(0).at(0) += -1/(2*rho);    C.at(0).at(1) += 1/(2*rho);
-    C.at(1).at(0) += -1/(2*rho);    C.at(1).at(1) += 1/(2*rho);
+    float lambda = m.getParameter(LAM_cote);
+    C.at(0).at(0) += -1/(2*lambda);    C.at(0).at(1) += 1/(2*lambda);
+    C.at(1).at(0) += -1/(2*lambda);    C.at(1).at(1) += 1/(2*lambda);
 }
 
 void createLocalD(Matrix &D,mesh m){
-    D.at(0).at(0) += -0.5;  D.at(0).at(1) += 0.5;
-    D.at(1).at(0) += -0.5;  D.at(1).at(1) += 0.5;
+    float alfa = m.getParameter(AL_cote);
+    D.at(0).at(0) += -(3*alfa)/2;  D.at(0).at(1) += (3*alfa)/2;
+    D.at(1).at(0) += -(3*alfa)/2;  D.at(1).at(1) += (3*alfa)/2;
+}
+
+
+void createLocalE(Matrix &E,mesh m){
+    float delta = m.getParameter(DEL_cote);
+    E.at(0).at(0) += -(3*delta)/2;  E.at(0).at(1) += (3*delta)/2;
+    E.at(1).at(0) += -(3*delta)/2;  E.at(1).at(1) += (3*delta)/2;
+}
+
+void createLocalE(Matrix &F, mesh m){
+    float l = m.getParameter(ELEMENT_LENGTH);
+    float u = m.getParameter(U_cote);
+    F.at(0).at(0) += u/l;      F.at(0).at(1) += -u/l;
+    F.at(1).at(0) += -u/l;     F.at(1).at(1) += u/l;
 }
 
 Matrix createLocalK(int element,mesh &m){
-    Matrix K,A,B,C,D;
+    Matrix K, A, B, C, D, E, F;
 
     zeroes(A,2);
     zeroes(B,2);
     zeroes(C,2);
     zeroes(D,2);
+    zeroes(E,2);
+    zeroes(F,2);
     createLocalA(A,m);
     createLocalB(B,m);
     createLocalC(C,m);
     createLocalD(D,m);
+    createLocalC(E,m);
+    createLocalD(F,m);
 
     Vector row1, row2, row3, row4;
 
 
     row1.push_back(A.at(0).at(0)+B.at(0).at(0)); 
     row1.push_back(A.at(0).at(1)+B.at(0).at(1));
-    row1.push_back(C.at(0).at(0));                  
-    row1.push_back(C.at(0).at(1));
+    row1.push_back(C.at(0).at(0)+F.at(0).at(0));                  
+    row1.push_back(C.at(0).at(1)+F.at(0).at(1));
 
     row2.push_back(A.at(1).at(0)+B.at(1).at(0)); 
     row2.push_back(A.at(1).at(1)+B.at(1).at(1));
-    row2.push_back(C.at(1).at(0)); 
-    row2.push_back(C.at(1).at(1));
+    row2.push_back(C.at(1).at(0)+F.at(1).at(0)); 
+    row2.push_back(C.at(1).at(1)+F.at(1).at(1));
 
     row3.push_back(D.at(0).at(0)); 
     row3.push_back(D.at(0).at(1));
-    row3.push_back(0); 
-    row3.push_back(0);
+    row3.push_back(E.at(0).at(0)); 
+    row3.push_back(E.at(0).at(0));
 
     row4.push_back(D.at(1).at(0)); 
     row4.push_back(D.at(1).at(1));

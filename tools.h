@@ -50,7 +50,7 @@ void correctConditions(int n,condition *list){
 void leerMallayCondiciones(mesh &m){
     char filename[14];
     ifstream file;
-    float l, t_cote, k_cote, lam_cote, u_cote, f_cote, al_cote, del_cote;
+    float l, t_cote, k_cote, lam_cote, u_cote, f_cote, al_cote, del_cote, n;
     int nnodes,neltos,ndirich_u,ndirich_p;
 
     
@@ -64,11 +64,11 @@ void leerMallayCondiciones(mesh &m){
     }while(!file);
 
     
-    file >> l >> t_cote >> k_cote >> lam_cote >> u_cote >> f_cote >> al_cote >> del_cote;
+    file >> l >> t_cote >> k_cote >> lam_cote >> u_cote >> f_cote >> al_cote >> del_cote >> n;
     file >> nnodes >> neltos >> ndirich_u >> ndirich_p;
 
     
-    m.setParameters(l,t_cte, k_cte, lam_cte, u_cte, f_cte, al_cte, del_cte);
+    m.setParameters(l,t_cote, k_cote, lam_cote, u_cote, f_cote, al_cote, del_cote, n);
     m.setSizes(nnodes,neltos,ndirich_u+ndirich_p);
     m.createData();
 
